@@ -136,14 +136,19 @@ int* Pop_Front(int* arr, const int n)
 }
 int* Erase(int* arr, const int n, const int erase_index)
 {
-	int* temp = new int[n - 1];
-	for (int i = 0; i < erase_index; i++)
+	if (erase_index >= 0 && erase_index < n)
 	{
-		temp[i] = arr[i];
+		int* temp = new int[n - 1];
+		for (int i = 0; i < erase_index; i++)
+		{
+			temp[i] = arr[i];
+		}
+		for (int i = erase_index + 1; i < n; i++)
+		{
+			temp[i - 1] = arr[i];
+		}
+		return temp;
 	}
-	for (int i = erase_index + 1; i < n; i++)
-	{
-		temp[i - 1] = arr[i];
-	}
-	return temp;
+	else
+		return arr;
 }
