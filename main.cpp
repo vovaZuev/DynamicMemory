@@ -25,11 +25,21 @@ void Insert(int** arr, int* n, int value, int index);
 void PopBack(int** arr, int* n);
 void PopFront(int** arr, int* n);
 void Erase(int** arr, int* n, int index);
+void PushColBack(int** arr, const int m, int& n);
 
 int** PushRowBack(int** arr, int &m, const int n);
 int** PushRowFront(int** arr, int& m, const int n);
+// Домашнее задание
+int** InsertRow(int** arr, int &m, const int n, const int index);
+int** PopRowBack(int** arr, int &m, const int n);
+int** PopRowFront(int** arr, int &m, const int n);
+int** EraseRow(int** arr, int &m, const int n, const int index);
 
-void PushColBack(int** arr, const int m, int&n);
+void PushColFront(int** arr, const int m, int &n);
+void InsertCol(int** arr, const int m, int &n, const int index);
+void PopColBack(int** arr, const int m, int &n);
+void PopColFront(int** arr, const int m, int &n);
+void EraseCol(int** arr, const int m, int &n, const int index);
 
 int main()
 {
@@ -103,7 +113,7 @@ int main()
 		cout << endl;
 	}*/
 	Print(arr, m, n);
-	cout << "Добавляем строку в конец массива: " << endl;
+	/*cout << "Добавляем строку в конец массива: " << endl;
 	arr = PushRowBack(arr, m, n);
 	Print(arr, m, n);
 	cout << "Добавляем строку в начало массива: " << endl;
@@ -111,7 +121,33 @@ int main()
 	Print(arr, m, n);
 	cout << "Добавляем столбец в конец массива: " << endl;
 	PushColBack(arr, m, n);
+	cout << "Добавляем строку по индексу " << (m - 2 > 0 ? m - 2 : m) << ":\n";
+	arr = InsertRow(arr, m, n, m - 2 > 0 ? m - 2 : m);
 	Print(arr, m, n);
+	cout << "Удаляем последнюю строку массива: " << endl;
+	arr = PopRowBack(arr, m, n);
+	Print(arr, m, n);
+	cout << "Удаляем нулевую строку массива: " << endl;
+	arr = PopRowFront(arr, m, n);
+	Print(arr, m, n);
+	cout << "Удаляем строку массива по индексу " << (m - 2 > 0 ? m - 2 : m - 1) << ":\n";
+	arr = EraseRow(arr, m, n, m - 2 > 0 ? m - 2 : m - 1);*/
+	cout << "Добавляем столбец в начало массива: " << endl;
+	PushColFront(arr, m, n);
+	Print(arr, m, n);
+	cout << "Добавляем столбец по индексу " << (n - 2 > 0 ? n - 2 : n) << ":\n";
+	InsertCol(arr, m, n, n - 2 > 0 ? n - 2 : n);
+	Print(arr, m, n);
+	cout << "Удаляем столбец в конце массива: " << endl;
+	PopColBack(arr, m, n);
+	Print(arr, m, n);
+	cout << "Удаляем столбец в начале массива: " << endl;
+	PopColFront(arr, m, n);
+	Print(arr, m, n);
+	cout << "Удаляем столбец по индексу " << (n - 2 > 0 ? n - 2 : n) << ":\n";
+	EraseCol(arr, m, n, n - 2 > 0 ? n - 2 : n);
+	Print(arr, m, n);
+	
 	// Удаление массива.
 	// 1) Удаляем строки массива.
 	for (int i = 0; i < m; i++)
@@ -159,6 +195,7 @@ void Print(int** arr, const int m, const int n)
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 void PushBack(int** arr, int* n, int value)
 {
@@ -312,6 +349,147 @@ void PushColBack(int** arr, const int m, int& n)
 		arr[i] = buffer;
 	}
 	n++;
+}
+
+// Домашнее задание
+int** InsertRow(int** arr, int& m, const int n, const int index)
+{
+	int** buffer = new int* [m + 1];
+	for (int i = 0; i < index; i++)
+	{
+		buffer[i] = arr[i];
+	}
+	buffer[index] = new int[n] {};
+	for (int i = index + 1; i < m + 1; i++)
+	{
+		buffer[i] = arr[i - 1];
+	}
+	delete[] arr;
+	m++;
+	return buffer;
+}
+
+int** PopRowBack(int** arr, int& m, const int n)
+{
+	int** buffer = new int* [m - 1];
+	for (int i = 0; i < m - 1; i++)
+	{
+		buffer[i] = arr[i];
+	}
+	delete[] arr;
+	m--;
+	return buffer;
+}
+
+int** PopRowFront(int** arr, int& m, const int n)
+{
+	int** buffer = new int* [m - 1];
+	for (int i = 1; i < m; i++)
+	{
+		buffer[i - 1] = arr[i];
+	}
+	delete[] arr;
+	m--;
+	return buffer;
+}
+
+int** EraseRow(int** arr, int& m, const int n, const int index)
+{
+	int** buffer = new int* [m - 1];
+	for (int i = 0; i < index; i++)
+	{
+		buffer[i] = arr[i];
+	}
+	for (int i = index + 1; i < m; i++)
+	{
+		buffer[i - 1] = arr[i];
+	}
+	delete[] arr;
+	m--;
+	return buffer;
+}
+
+void PushColFront(int** arr, const int m, int& n)
+{
+	for (int i = 0; i < m; i++)
+	{
+		int* buffer = new int[n + 1]{};
+		for (int j = 1; j < n + 1; j++)
+		{
+			buffer[j] = arr[i][j - 1];
+		}
+		delete[] arr[i];
+		arr[i] = buffer;
+	}
+	n++;
+}
+
+void InsertCol(int** arr, const int m, int& n, const int index)
+{
+	for (int i = 0; i < m; i++)
+	{
+		int* buffer = new int[n + 1]{};
+		for (int j = 0; j < index; j++)
+		{
+			buffer[j] = arr[i][j];
+		}
+		for (int j = index; j < n; j++)
+		{
+			buffer[j + 1] = arr[i][j];
+		}
+		delete[] arr[i];
+		arr[i] = buffer;
+	}
+	n++;
+}
+
+void PopColBack(int** arr, const int m, int& n)
+{
+	for (int i = 0; i < m; i++)
+	{
+		int* buffer = new int[n - 1]{};
+		for (int j = 0; j < n - 1; j++)
+		{
+			buffer[j] = arr[i][j];
+		}
+		delete[] arr[i];
+		arr[i] = buffer;
+	}
+	n--;
+}
+
+void PopColFront(int** arr, const int m, int& n)
+{
+	for (int i = 0; i < m; i++)
+	{
+		int* buffer = new int[n - 1]{};
+		for (int j = 1; j < n; j++)
+		{
+			buffer[j - 1] = arr[i][j];
+		}
+		delete[] arr[i];
+		arr[i] = buffer;
+	}
+	n--;
+}
+
+void EraseCol(int** arr, const int m, int& n, const int index)
+{
+	for (int i = 0; i < m; i++)
+	{
+		int* buffer = new int[n - 1]{};
+		for (int j = 0; j < index; j++)
+		{
+			buffer[j] = arr[i][j];
+		}
+		for (int j = index + 1; j < n; j++)
+		{
+			buffer[j - 1] = arr[i][j];
+		}
+		delete[] arr[i];
+		arr[i] = buffer;
+	}
+	n--;
 }
 
 /*----------------------------------------------------------
