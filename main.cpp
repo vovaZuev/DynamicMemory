@@ -10,8 +10,8 @@ using std::endl;
 template <typename T> T** Allocate(const int m, const int n);
 template <typename T> void Clear(T** arr, const int m);
 
-void FillRand(int* arr, const int n);
-void FillRand(int ** arr, const int m, const int n);
+template <typename T> void FillRand(T* arr, const int n);
+template <typename T> void FillRand(T ** arr, const int m, const int n);
 template <typename T> void Print(T* arr, const int n);
 template <typename T> void Print(T ** arr, const int m, const int n);
 /*--------------------------------------------------------
@@ -104,7 +104,9 @@ int main()
 	{
 		arr[i] = new int[n] {};
 	}*/
-	int** arr = Allocate<int>(m, n);
+	//int** arr = Allocate<int>(m, n);
+	//double** arr = Allocate<double>(m, n);
+	char** arr = Allocate<char>(m, n);
 	cout << "Memory allocated" << endl;
 	FillRand(arr, m, n);
 	Print(arr, m, n);
@@ -188,14 +190,14 @@ template <typename T> void Clear(T** arr, const int m)
 	delete[] arr;
 }
 
-void FillRand(int* arr, const int n)
+template <typename T> void FillRand(T* arr, const int n)
 {
 	for (int i = 0; i < n; i++)
 	{
 		*(arr + i) = rand() % 100;
 	}
 }
-void FillRand(int** arr, const int m, const int n)
+template <typename T> void FillRand(T** arr, const int m, const int n)
 {
 	for (int i = 0; i < m; i++)
 	{
