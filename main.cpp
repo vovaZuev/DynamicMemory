@@ -7,6 +7,9 @@ using std::endl;
 //#define DYNAMIC_MEMORY_1
 #define DYNAMIC_MEMORY_2
 
+int** Allocate(const int m, const int n);
+void Clear(int** arr, const int m);
+
 void FillRand(int* arr, const int n);
 void FillRand(int ** arr, const int m, const int n);
 template <typename T> void Print(T* arr, const int n);
@@ -94,13 +97,14 @@ int main()
 	int n; // Количество столбцов.
 	cout << "Введите количество строк: "; cin >> m;
 	cout << "Введите количество столбцов: "; cin >> n;
-	// 1) Создаем массив указателей.
+	/*// 1) Создаем массив указателей.
 	int** arr = new int* [m];
 	// 2) Выделяем память под строки.
 	for (int i = 0; i < m; i++)
 	{
 		arr[i] = new int[n] {};
-	}
+	}*/
+	int** arr = Allocate(m, n);
 	cout << "Memory allocated" << endl;
 	FillRand(arr, m, n);
 	Print(arr, m, n);
@@ -154,14 +158,34 @@ int main()
 	
 	// Удаление массива.
 	// 1) Удаляем строки массива.
-	for (int i = 0; i < m; i++)
+	/*for (int i = 0; i < m; i++)
 	{
 		delete[] arr[i];
 	}
 	// 2) Удаляем массив указателей.
-	delete[] arr;
+	delete[] arr;*/
+	Clear(arr, m);
 
 #endif
+}
+
+int** Allocate(const int m, const int n)
+{
+	int** arr = new int* [m];
+	for (int i = 0; i < m; i++)
+	{
+		arr[i] = new int[n] {};
+	}
+	return arr;
+}
+
+void Clear(int** arr, const int m)
+{
+	for (int i = 0; i < m; i++)
+	{
+		delete[] arr[i];
+	}
+	delete[] arr;
 }
 
 void FillRand(int* arr, const int n)
