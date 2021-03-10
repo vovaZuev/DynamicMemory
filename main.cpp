@@ -7,8 +7,8 @@ using std::endl;
 //#define DYNAMIC_MEMORY_1
 #define DYNAMIC_MEMORY_2
 
-int** Allocate(const int m, const int n);
-void Clear(int** arr, const int m);
+template <typename T> T** Allocate(const int m, const int n);
+template <typename T> void Clear(T** arr, const int m);
 
 void FillRand(int* arr, const int n);
 void FillRand(int ** arr, const int m, const int n);
@@ -104,7 +104,7 @@ int main()
 	{
 		arr[i] = new int[n] {};
 	}*/
-	int** arr = Allocate(m, n);
+	int** arr = Allocate<int>(m, n);
 	cout << "Memory allocated" << endl;
 	FillRand(arr, m, n);
 	Print(arr, m, n);
@@ -169,17 +169,17 @@ int main()
 #endif
 }
 
-int** Allocate(const int m, const int n)
+template <typename T> T** Allocate(const int m, const int n)
 {
-	int** arr = new int* [m];
+	T** arr = new T* [m];
 	for (int i = 0; i < m; i++)
 	{
-		arr[i] = new int[n] {};
+		arr[i] = new T[n] {};
 	}
 	return arr;
 }
 
-void Clear(int** arr, const int m)
+template <typename T> void Clear(T** arr, const int m)
 {
 	for (int i = 0; i < m; i++)
 	{
