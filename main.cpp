@@ -107,8 +107,10 @@ int main()
 		arr[i] = new int[n] {};
 	}*/
 	//int** arr = Allocate<int>(m, n);
-	double** arr = Allocate<double>(m, n);
+	//double** arr = Allocate<double>(m, n);
 	//char** arr = Allocate<char>(m, n);
+	typedef int DataType;
+	DataType** arr = Allocate<DataType>(m, n);
 	cout << "Memory allocated" << endl;
 	FillRand(arr, m, n);
 	Print(arr, m, n);
@@ -198,7 +200,7 @@ template <typename T> void Random(T & value)
 	if (typeid(value) == typeid(float) || typeid(value) == typeid(double))
 		value = double(rand() % 10000) / 100;
 	else if (typeid(value) == typeid(char))
-		value = rand();
+		value = (char)rand();
 	else
 		value = rand() % 100;
 }
