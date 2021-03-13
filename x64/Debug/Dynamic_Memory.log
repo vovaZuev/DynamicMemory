@@ -1,1 +1,16 @@
-﻿  Dynamic_Memory.vcxproj -> C:\Users\vova_zuev\source\repos\Dynamic_Memory\x64\Debug\Dynamic_Memory.exe
+﻿  main.cpp
+C:\Users\vova_zuev\source\repos\Dynamic_Memory\Dynamic_Memory\main.cpp(146,34): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=DataType
+          ]
+C:\Users\vova_zuev\source\repos\Dynamic_Memory\Dynamic_Memory\main.cpp(166): message : see reference to function template instantiation 'void Random<T>(T &)' being compiled
+          with
+          [
+              T=DataType
+          ]
+C:\Users\vova_zuev\source\repos\Dynamic_Memory\Dynamic_Memory\main.cpp(99): message : see reference to function template instantiation 'void FillRand<DataType>(T **,const int,const int)' being compiled
+          with
+          [
+              T=DataType
+          ]

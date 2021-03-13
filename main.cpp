@@ -16,14 +16,7 @@ template <typename T> void FillRand(T* arr, const int n);
 template <typename T> void FillRand(T ** arr, const int m, const int n);
 template <typename T> void Print(T* arr, const int n);
 template <typename T> void Print(T ** arr, const int m, const int n);
-/*--------------------------------------------------------
-int* Push_Back(int* arr, const int n, int push_back);
-int* Push_Front(int* arr, const int n, int push_front);
-int* Insert(int* arr, const int n, int insert, const int insert_index);
-int* Pop_Back(int* arr, const int n);
-int* Pop_Front(int* arr, const int n);
-int* Erase(int* arr, const int n, const int erase_index);
------------------------------------------------------------*/
+
 template <typename T> void PushBack(T** arr, int* n, int value);
 template <typename T> void PushFront(T** arr, int* n, int value);
 template <typename T> void Insert(T** arr, int* n, int value, int index);
@@ -34,7 +27,6 @@ template <typename T> void PushColBack(T** arr, const int m, int& n);
 
 template <typename T> T** PushRowBack(T** arr, int &m, const int n);
 template <typename T> T** PushRowFront(T** arr, int& m, const int n);
-// Домашнее задание
 template <typename T> T** InsertRow(T** arr, int &m, const int n, const int index);
 template <typename T> T** PopRowBack(T** arr, int &m, const int n);
 template <typename T> T** PopRowFront(T** arr, int &m, const int n);
@@ -99,53 +91,14 @@ int main()
 	int n; // Количество столбцов.
 	cout << "Введите количество строк: "; cin >> m;
 	cout << "Введите количество столбцов: "; cin >> n;
-	/*// 1) Создаем массив указателей.
-	int** arr = new int* [m];
-	// 2) Выделяем память под строки.
-	for (int i = 0; i < m; i++)
-	{
-		arr[i] = new int[n] {};
-	}*/
-	//int** arr = Allocate<int>(m, n);
-	//double** arr = Allocate<double>(m, n);
-	//char** arr = Allocate<char>(m, n);
+
 	typedef int DataType;
 	DataType** arr = Allocate<DataType>(m, n);
 	cout << "Memory allocated" << endl;
+
 	FillRand(arr, m, n);
 	Print(arr, m, n);
 	
-	/*cout << "Memory allocated" << endl;
-	FillRand(arr, m, n);*/
-	// Обращение к элементам массива.
-	/*for (int i = 0; i < m; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			cout << arr[i][j] << "\t";
-		}
-		cout << endl;
-	}*/
-	//Print(arr, m, n);
-	/*cout << "Добавляем строку в конец массива: " << endl;
-	arr = PushRowBack(arr, m, n);
-	Print(arr, m, n);
-	cout << "Добавляем строку в начало массива: " << endl;
-	arr = PushRowFront(arr, m, n);
-	Print(arr, m, n);
-	cout << "Добавляем столбец в конец массива: " << endl;
-	PushColBack(arr, m, n);
-	cout << "Добавляем строку по индексу " << (m - 2 > 0 ? m - 2 : m) << ":\n";
-	arr = InsertRow(arr, m, n, m - 2 > 0 ? m - 2 : m);
-	Print(arr, m, n);
-	cout << "Удаляем последнюю строку массива: " << endl;
-	arr = PopRowBack(arr, m, n);
-	Print(arr, m, n);
-	cout << "Удаляем нулевую строку массива: " << endl;
-	arr = PopRowFront(arr, m, n);
-	Print(arr, m, n);
-	cout << "Удаляем строку массива по индексу " << (m - 2 > 0 ? m - 2 : m - 1) << ":\n";
-	arr = EraseRow(arr, m, n, m - 2 > 0 ? m - 2 : m - 1);*/
 	cout << "Добавляем столбец в начало массива: " << endl;
 	PushColFront(arr, m, n);
 	Print(arr, m, n);
@@ -162,14 +115,6 @@ int main()
 	EraseCol(arr, m, n, n - 2 > 0 ? n - 2 : n);
 	Print(arr, m, n);
 	
-	// Удаление массива.
-	// 1) Удаляем строки массива.
-	/*for (int i = 0; i < m; i++)
-	{
-		delete[] arr[i];
-	}
-	// 2) Удаляем массив указателей.
-	delete[] arr;*/
 	Clear(arr, m);
 
 #endif
@@ -209,7 +154,6 @@ template <typename T> void FillRand(T* arr, const int n)
 {
 	for (int i = 0; i < n; i++)
 	{
-		//*(arr + i) = rand() % 100;
 		Random(arr[i]);
 	}
 }
@@ -219,7 +163,6 @@ template <typename T> void FillRand(T** arr, const int m, const int n)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			//arr[i][j] = rand() % 100;
 			Random(arr[i][j]);
 		}
 	}
@@ -397,8 +340,6 @@ template <typename T> T** PushRowFront(T** arr, int& m, const int n)
 	return buffer;
 }
 
-
-// Домашнее задание
 template <typename T> T** InsertRow(T** arr, int& m, const int n, const int index)
 {
 	T** buffer = new T* [m + 1];
@@ -538,81 +479,3 @@ template <typename T> void EraseCol(T** arr, const int m, int& n, const int inde
 	}
 	n--;
 }
-
-/*----------------------------------------------------------
-int* Push_Back(int* arr, const int n, int push_back)
-{
-	int* temp = new int[n + 1];
-	for (int i = 0; i < n; i++)
-	{
-		temp[i] = arr[i];
-	}
-	temp[n] = push_back;
-	return temp;
-}
-int* Push_Front(int* arr, const int n, const int push_front)
-{
-	int* temp = new int[n + 1];
-	temp[0] = push_front;
-	for (int i = 1; i < n + 1; i++)
-	{
-		temp[i] = arr[i - 1];
-	}
-	return temp;
-}
-int* Insert(int* arr, const int n, int insert, const int insert_index)
-{
-	if (insert_index >= 0 && insert_index < n)
-	{
-		int* temp = new int[n + 1];
-		for (int i = 0; i < insert_index; i++)
-		{
-			temp[i] = arr[i];
-		}
-		temp[insert_index] = insert;
-		for (int i = insert_index + 1; i < n + 1; i++)
-		{
-			temp[i] = arr[i - 1];
-		}
-		return temp;
-	}
-	else
-		return arr;
-}
-int* Pop_Back(int* arr, const int n)
-{
-	int* temp = new int[n - 1];
-	for (int i = 0; i < n - 1; i++)
-	{
-		temp[i] = arr[i];
-	}
-	return temp;
-}
-int* Pop_Front(int* arr, const int n)
-{
-	int* temp = new int[n - 1];
-	for (int i = 0; i < n - 1; i++)
-	{
-		temp[i] = arr[i + 1];
-	}
-	return temp;
-}
-int* Erase(int* arr, const int n, const int erase_index)
-{
-	if (erase_index >= 0 && erase_index < n)
-	{
-		int* temp = new int[n - 1];
-		for (int i = 0; i < erase_index; i++)
-		{
-			temp[i] = arr[i];
-		}
-		for (int i = erase_index + 1; i < n; i++)
-		{
-			temp[i - 1] = arr[i];
-		}
-		return temp;
-	}
-	else
-		return arr;
-}
----------------------------------------------------------------*/
